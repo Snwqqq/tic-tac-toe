@@ -84,7 +84,10 @@ function checkWin(){
     ]
     if(winConditions.some((winCondition)=> winCondition.every((element)=> currentBoard[element]===activePlayer.getSymbol())))
     {
-        console.log(winner = activePlayer.getPlayerName());
+        winner = activePlayer;
+        gameOver = true;
+    }
+    if(currentBoard.every((element)=> element!=='')){
         gameOver = true;
     }
 
@@ -103,14 +106,21 @@ function buildDOM(){
     const boardButtons = document.querySelectorAll('.board');
     const currentBoard = board.getBoard();
     boardButtons.forEach((button)=>{
-        button.textContent = currentBoard[button.id];
+        if(currentBoard[button.id]!==''&&button.childElementCount===0){
+            const img = document.createElement('img');
+            if(currentBoard[button.id]==='X'){
+              img.src= "./Images/cross.png";
+            }
+            if(currentBoard[button.id]==='0'){
+                img.src = "./Images/circle.png";
+            }
+            button.appendChild(img);
+        }
     });
 }
 buildDOM();
 return {playRound,setPlayerChoise,winner};
 }
-
-
 
 
 
