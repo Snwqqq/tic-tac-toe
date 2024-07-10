@@ -9,13 +9,41 @@ body{
     align-items: center;
     justify-content: center;
     height: 100vh;
+    background-color: #fefce3;
 }
 
 .ttt-container{
     display: flex;
     flex-direction: column;
 }
+div{
+    display: flex;
+}
 .board{
-    padding: 50px;
-    font-size: 100px;
+    padding: 20px;
+    width: 150px;
+    height: 150px;
+    margin: 0;
+    background-color: rgba(251, 251, 251, 0);
+    border: none;
+    display: flex;
+}
+.but1,
+.but4,
+.but5{
+    border-bottom: 10px solid #002331;
+    border-right: 10px solid #002331;
+}
+.but2{
+    border-bottom: 10px solid #002331;
+    border-right: 10px solid #002331;
+}
+
+.but6,
+.but3{
+    border-bottom: 10px solid #002331;
+}
+.but7,
+.but8{
+    border-right: 10px solid #002331;
 }
