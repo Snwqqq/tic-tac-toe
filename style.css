@@ -16,5 +16,6 @@ body{
     flex-direction: column;
 }
 .board{
-    padding: 20px;
+    padding: 50px;
+    font-size: 100px;
 }
