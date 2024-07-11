@@ -59,6 +59,23 @@ div{
 .but8{
     border-right: 10px solid #002331;
 }
+#new-game{
+    margin-top: 40px;
+    border: 5px solid #002331;
+    font-size: clamp(10px,1rem + 3vh,70px); 
+    padding: 10px;
+    border-radius: 20px;
+    background-color: #fefce3;
+    transition: all, 0.3s;
+}
+#new-game:hover{
+    background-color: #002331;
+    border-color: #fefce3;
+    color: #fefce3;
+}
+#new-game:active{
+    background-color: white;
+}
 
 @media (max-width:450px) {
 

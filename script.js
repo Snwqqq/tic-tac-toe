@@ -5,10 +5,37 @@
 // then reapeat until there is 3 symobls in a row.
 // 
 let gameOver = false;
+const player1 = Player('X');
+const player2 = Player('0');
+let winner;
+
+
+
+const board = function(){
+    let board = [
+         '','',''
+        ,'','',''
+        ,'','',''
+    ];
+    
+    function getBoard(){
+        return board;
+    }
+    function placeSymbol(symbol,x){
+      board[x]= symbol;
+    }
+    function clearBoard(){
+        board = [
+            '','',''
+           ,'','',''
+           ,'','',''
+       ];
+    }
+    return { getBoard,placeSymbol,clearBoard};
+    }();
 
 
 const setEvents = function setEvents(){
-    const game = GameController();
     const ttrContainer = document.querySelector('.ttt-container');
     ttrContainer.addEventListener('click',(event)=>{
         game.setPlayerChoise(event.target.id.split(''));
@@ -17,55 +44,83 @@ const setEvents = function setEvents(){
 }();
 
 
-function Board(){
-let board = [
-     '','',''
-    ,'','',''
-    ,'','',''
-];
-
-function getBoard(){
-    return board;
-}
-function placeSymbol(symbol,x){
-  board[x]= symbol;
-}
-return { getBoard,placeSymbol};
-}
 
 
-function Player(name){
-    let symbol ='';
-    function setSymbol(newSymbol){
-        symbol=newSymbol;
-    }
+function Player(newSymbol){
+    let symbol =newSymbol;
+
     function getSymbol(){
         return symbol;
     }
-    function getPlayerName(){
-        return name;
-    }
-    return {setSymbol, getSymbol,getPlayerName};
+    return { getSymbol};
 }
 
-function GameController(){
-const board = Board();
-const player1 = Player('Stas');
-const player2 = Player('Masha');
 
-player1.setSymbol('X');
-player2.setSymbol('0');
+function buildDOM(){
+    const boardButtons = document.querySelectorAll('.board');
+    const infoText = document.querySelector('.info-text');
+    const infoImg = document.querySelector('.info-img');
+    infoImg.src = game.getActivePlayer().getSymbol()==='0'?"./Images/circle.png":"./Images/cross.png";
+    
+    if(winner)
+    {
+        if(winner.getSymbol() === player1.getSymbol())
+        {
+            infoImg.src = "./Images/cross.png"
+            infoText.textContent = "WIN!";
+        }
+         else if(winner.getSymbol()===player2.getSymbol())
+        {
+            infoImg.src ="./Images/circle.png"
+            infoText.textContent = "WIN!";
+        }
+    }
+    if(gameOver&&!winner){
+        infoImg.src='';
+        infoImg.alt='';
+        infoText.textContent="IT'S A TIE";
+    }
+
+    const currentBoard = board.getBoard();
+    boardButtons.forEach((button)=>{
+        if(currentBoard[button.id]!==''&&button.childElementCount===0){
+            const img = document.createElement('img');
+            if(currentBoard[button.id]==='X'){
+              img.src= "./Images/cross.png";
+              button.appendChild(img);
+            }
+            if(currentBoard[button.id]==='0'){
+                img.src = "./Images/circle.png";
+                button.appendChild(img);
+            }
+        }
+        if(currentBoard[button.id]===''&&button.childElementCount>0)
+            {
+                button.removeChild(button.firstChild);
+            }
+    });
+}
 
 
+
+
+const game = function(){
 let activePlayer = player1;
-let winner;
+let playerChoise;
 
 function swtchActivePlayer()
 {
 activePlayer = activePlayer === player1 ? player2:player1;
 }
-console.log(`${activePlayer.getPlayerName()} choose your cell`);
-let playerChoise = [1,1];
+function getActivePlayer(){
+    return activePlayer;
+}
+function resetActivePlayer(){
+    activePlayer = player1;
+}
+
+
+
 function setPlayerChoise(x){
 playerChoise = x;
 }
@@ -102,56 +157,26 @@ function playRound(){
     buildDOM();
     }
 }
-function buildDOM(){
-    const boardButtons = document.querySelectorAll('.board');
-    const infoText = document.querySelector('.info-text');
-    const infoImg = document.querySelector('.info-img');
-    infoImg.src = infoImg.src.endsWith("cross.png")?"./Images/circle.png":"./Images/cross.png";
-    if(winner)
-    {
-        if(winner.getSymbol() === player1.getSymbol())
-        {
-            infoImg.src = "./Images/cross.png"
-            infoText.textContent = "WIN!";
-        }
-        if(winner.getSymbol()===player2.getSymbol())
-        {
-            infoImg.src ="./Images/circle.png"
-            infoText.textContent = "WIN!";
-        }
-       
-
-        if(!winner&&!gameOver){
-            infoImg.remove();
-            infoText.textContent="IT'S A TIE";
-        }
-    }
-    const currentBoard = board.getBoard();
-    boardButtons.forEach((button)=>{
-        if(currentBoard[button.id]!==''&&button.childElementCount===0){
-            const img = document.createElement('img');
-            if(currentBoard[button.id]==='X'){
-              img.src= "./Images/cross.png";
-            }
-            if(currentBoard[button.id]==='0'){
-                img.src = "./Images/circle.png";
-            }
-            button.appendChild(img);
-        }
-    });
-    if(gameOver){
-        const reset = document.createElement('p');
-        const body = document.querySelector('body');
-        body.appendChild('p');
-        playRound.textContent = "New Game";
-    }
-}
-buildDOM();
-return {playRound,setPlayerChoise,winner};
-}
+return {playRound,setPlayerChoise,getActivePlayer,resetActivePlayer};
+}();
 
 
 
+
+
+
+
+const resetGame = function resetGame(){
+const resBut = document.querySelector('#new-game');
+resBut.addEventListener('click',()=>{
+    board.clearBoard();
+    game.resetActivePlayer();
+    winner=undefined;
+    gameOver=false;
+    buildDOM();
+})
+
+}();
 
 
 
