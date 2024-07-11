@@ -61,7 +61,9 @@ function buildDOM(){
     const infoText = document.querySelector('.info-text');
     const infoImg = document.querySelector('.info-img');
     infoImg.src = game.getActivePlayer().getSymbol()==='0'?"./Images/circle.png":"./Images/cross.png";
-    
+
+
+
     if(winner)
     {
         if(winner.getSymbol() === player1.getSymbol())
@@ -168,11 +170,13 @@ return {playRound,setPlayerChoise,getActivePlayer,resetActivePlayer};
 
 const resetGame = function resetGame(){
 const resBut = document.querySelector('#new-game');
+const infoText = document.querySelector('.info-text');
 resBut.addEventListener('click',()=>{
     board.clearBoard();
     game.resetActivePlayer();
     winner=undefined;
     gameOver=false;
+    infoText.textContent = 'TURN!';
     buildDOM();
 })
 
