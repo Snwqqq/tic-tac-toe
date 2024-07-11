@@ -2,15 +2,27 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Ga Maamli',Arial, Helvetica, sans-serif;
 }
 
 body{
     display: flex;
+    flex-direction: column;
+    gap: 20px;
     align-items: center;
     justify-content: center;
     height: 100vh;
     background-color: #fefce3;
 }
+.info{
+    gap: 20px;
+    display: flex;
+}
+p{
+    font-size: clamp(10px,1rem + 5vh,70px);
+}
+
+
 
 .ttt-container{
     display: flex;

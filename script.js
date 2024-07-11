@@ -104,6 +104,28 @@ function playRound(){
 }
 function buildDOM(){
     const boardButtons = document.querySelectorAll('.board');
+    const infoText = document.querySelector('.info-text');
+    const infoImg = document.querySelector('.info-img');
+    infoImg.src = infoImg.src.endsWith("cross.png")?"./Images/circle.png":"./Images/cross.png";
+    if(winner)
+    {
+        if(winner.getSymbol() === player1.getSymbol())
+        {
+            infoImg.src = "./Images/cross.png"
+            infoText.textContent = "WIN!";
+        }
+        if(winner.getSymbol()===player2.getSymbol())
+        {
+            infoImg.src ="./Images/circle.png"
+            infoText.textContent = "WIN!";
+        }
+       
+
+        if(!winner&&!gameOver){
+            infoImg.remove();
+            infoText.textContent="IT'S A TIE";
+        }
+    }
     const currentBoard = board.getBoard();
     boardButtons.forEach((button)=>{
         if(currentBoard[button.id]!==''&&button.childElementCount===0){
@@ -117,6 +139,12 @@ function buildDOM(){
             button.appendChild(img);
         }
     });
+    if(gameOver){
+        const reset = document.createElement('p');
+        const body = document.querySelector('body');
+        body.appendChild('p');
+        playRound.textContent = "New Game";
+    }
 }
 buildDOM();
 return {playRound,setPlayerChoise,winner};
