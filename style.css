@@ -47,3 +47,15 @@ div{
 .but8{
     border-right: 10px solid #002331;
 }
+
+@media (max-width:450px) {
+
+.board{
+    padding: 10px;
+    width: 100px;
+    height: 100px;
+}
+img{
+    width: 75px;
+}
+}
